@@ -14,11 +14,11 @@ const storage = multer.diskStorage({
 
 //set upload
 const upload = multer({
-		storage,
-		limits: {fileSize: 100000000},
-		fileFilter: function(req, file, callback){
-				checkFileType(file, callback)
-		}
+	storage,
+	limits: {fileSize: 100000000},
+	fileFilter: function(req, file, callback){
+		checkFileType(file, callback)
+	}
 }).single('image')
 
 function checkFileType(file, callback){
@@ -38,19 +38,19 @@ app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-		res.render('index')
+	res.render('index')
 })
 
 app.post('/upload', (req, res) => {
 	upload(req, res, (err) => {
-			if(err){
-				res.render('index', {msg: err})
-			}else {
-				if (req.file === undefined){
+		if(err){
+			res.render('index', {msg: err})
+		}else {
+			if (req.file === undefined){
 				res.render('index', {msg: 'Not image selected'})
 			} else {
 				res.render('index', {msg: 'Imgage Uploaded', file: `uploads/${req.file.filename}`})
-					//res.render('index', {msg: 'Image Uploaded', file: `uploads/${req.file.filename}`})
+				//res.render('index', {msg: 'Image Uploaded', file: `uploads/${req.file.filename}`})
 			}
 		}
 
